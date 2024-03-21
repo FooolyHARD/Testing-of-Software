@@ -48,6 +48,9 @@ public class MergeSort {
 
     // Основная функция, которая сортирует массив arr[l..r] используя сортировку слиянием
     public static int[] sort(int[] arr, int l, int r) {
+        if (arr == null ||  arr.length == 0){
+            throw new IllegalArgumentException();
+        }
         if (l < r) {
             // Находим средний индекс массива
             int m = (l + r) / 2;
