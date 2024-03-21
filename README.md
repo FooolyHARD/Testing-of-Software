@@ -1,5 +1,6 @@
 # Testing-of-Software
 ### [Lab1](https://github.com/FooolyHARD/Testing-of-Software/tree/lab1)
+### [Report](https://github.com/FooolyHARD/Testing-of-Software/blob/main/TPO1.pdf)
 ---
 var - `618`
 
