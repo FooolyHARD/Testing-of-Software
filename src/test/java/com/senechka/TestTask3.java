@@ -19,7 +19,7 @@ public class TestTask3 {
         private PlaceHolder distPlace;
 
         @BeforeEach
-        void init() throws Exception {
+        void setUp() throws Exception {
             konura = new Place(new Coordinates(10,10), PlaceType.KONURA);
             trashcan = new Place(new Coordinates(1,1), PlaceType.POMOIKA);
             room = new Place(new Coordinates(1,1), PlaceType.ROOM);
