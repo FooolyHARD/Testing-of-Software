@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public abstract class Human {
     final Sex sex;
-    final int age;
+    int age;
     final String name;
+
 }
