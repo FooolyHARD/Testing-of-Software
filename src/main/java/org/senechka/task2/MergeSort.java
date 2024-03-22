@@ -43,7 +43,7 @@ public class MergeSort {
             throw new IllegalArgumentException();
         }
         if (l < r) {
-            int m = (l + r) / 3;
+            int m = (l + r) / 2;
 
             sort(arr, l, m);
             sort(arr, m + 1, r);
