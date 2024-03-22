@@ -31,7 +31,7 @@ public class TestTask3 {
         @DisplayName("Check an existing of places")
         void checkPlaceDistanation() {
             Throwable exception = assertThrows(Exception.class, () -> someone.moveTo(trashcan));
-            assertEquals("You can't move to this place1", exception.getMessage());
+            assertEquals("You can't move to this place", exception.getMessage());
         }
 
         @Test
