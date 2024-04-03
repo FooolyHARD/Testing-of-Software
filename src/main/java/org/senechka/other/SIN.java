@@ -48,7 +48,7 @@ public class SIN {
         try (CSVPrinter printer = CSVFormat.DEFAULT.print(out)) {
             printer.printRecord(x, res);
         } catch (IOException e) {
-            System.out.println("Wrong filename");
+            System.out.println("Corrupted filename");
         }
         return res;
     }

@@ -44,12 +44,12 @@ public class COS {
         return result;
     }
 
-    public double writeResultToCSV(double x, double eps, Writer out) {
-        double res = calculate(x, eps);
+    public double writeResultToCSV(double x, double epsilon, Writer out) {
+        double res = calculate(x, epsilon);
         try (CSVPrinter printer = CSVFormat.DEFAULT.print(out)) {
             printer.printRecord(x, res);
         } catch (IOException e) {
-            System.out.println("Wrong filename");
+            System.out.println("Corrupted filename");
         }
         return res;
     }
