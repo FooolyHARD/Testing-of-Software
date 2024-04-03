@@ -2,6 +2,7 @@ package org.senechka.log;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.senechka.exceptions.CorruptetFilenameException;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -38,7 +39,7 @@ public class LN {
         try (CSVPrinter printer = CSVFormat.DEFAULT.print(out)) {
             printer.printRecord(x, res);
         } catch (IOException e) {
-            System.out.println("Corrupted filename");
+            throw new CorruptetFilenameException("Corrupted filename");
         }
         return res;
     }

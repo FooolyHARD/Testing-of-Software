@@ -2,6 +2,7 @@ package org.senechka.other;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.senechka.exceptions.CorruptetFilenameException;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -18,7 +19,7 @@ public class SEC {
         this.cos = new COS();
     }
 
-    public double sec(double x, double epsilon) {
+    public double calculate(double x, double epsilon) {
         double cosVal = cos.calculate(x, epsilon);
         double nan = Double.NaN;
         if (Double.isNaN(cosVal) || cosVal == 0) return nan;
@@ -26,11 +27,11 @@ public class SEC {
     }
 
     public double writeResultToCSV(double x, double epsilon, Writer out) {
-        double res = sec(x, epsilon);
+        double res = calculate(x, epsilon);
         try (CSVPrinter printer = CSVFormat.DEFAULT.print(out)) {
             printer.printRecord(x, res);
         } catch (IOException e) {
-            System.out.println("Corrupted filename");
+            throw new CorruptetFilenameException("Corrupted filename");
         }
         return res;
     }

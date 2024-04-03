@@ -2,6 +2,7 @@ package org.senechka.log;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.senechka.exceptions.CorruptetFilenameException;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -17,16 +18,16 @@ public class LOG {
         this.ln = new LN();
     }
 
-    public double log(double a, double b, double epsilon) {
+    public double calculate(double a, double b, double epsilon) {
         return ln.calculate(b, epsilon) / ln.calculate(a, epsilon);
     }
 
     public double writeResultToCSV(double a, double x, double epsilon, Writer out) {
-        double res = log(a, x, epsilon);
+        double res = calculate(a, x, epsilon);
         try (CSVPrinter printer = CSVFormat.DEFAULT.print(out)) {
             printer.printRecord(x, res);
         } catch (IOException e) {
-            System.out.println("Corrupted filename");
+            throw new CorruptetFilenameException("Corrupted filename");
         }
         return res;
     }
