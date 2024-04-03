@@ -22,7 +22,7 @@ public class COS {
         this.sin = new SIN();
     }
 
-    public double cos(double x, double epsilon) {
+    public double calculate(double x, double epsilon) {
         double x_init = x;
         double pi = Math.PI;
         x %= pi * 2;
@@ -36,16 +36,16 @@ public class COS {
             while (x > pi) x -= 2 * pi;
         }
         double result;
-        if (x > Math.PI / 2 || x < -Math.PI / 2) {
+        if (x > pi / 2 || x < -pi / 2) {
             result = -1 * Math.sqrt(1 - sin.calculate(x_init, epsilon) * sin.calculate(x_init, epsilon));
         } else result = Math.sqrt(1 - sin.calculate(x_init, epsilon) * sin.calculate(x_init, epsilon));
-        if (Math.abs(result) > 1) return Double.NaN;
+        if (Math.abs(result) > 1) return nan;
         if (Math.abs(result) <= epsilon) return 0;
         return result;
     }
 
     public double writeResultToCSV(double x, double eps, Writer out) {
-        double res = cos(x, eps);
+        double res = calculate(x, eps);
         try (CSVPrinter printer = CSVFormat.DEFAULT.print(out)) {
             printer.printRecord(x, res);
         } catch (IOException e) {
