@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.Writer;
 public class SIN {
 
-    public double sin(double x, double eps) {
+    public double calculate(double x, double epsilon) {
         double pos_inf = Double.POSITIVE_INFINITY;
         double neg_inf = Double.NEGATIVE_INFINITY;
         double nan = Double.NaN;
@@ -29,7 +29,7 @@ public class SIN {
         xx = x * x;
         pow = x;
 
-        while (Math.abs(result_l - result) > eps) {
+        while (Math.abs(result_l - result) > epsilon) {
             fact /= cnt;
             result_l = result;
             result += sign * pow * fact;
@@ -39,12 +39,12 @@ public class SIN {
             cnt += 2;
         }
         if (Math.abs(result) > 1) return nan;
-        if (Math.abs(result) < eps) return 0;
+        if (Math.abs(result) < epsilon) return 0;
         return result;
     }
 
-    public double writeResultToCSV(double x, double eps, Writer out) {
-        double res = sin(x, eps);
+    public double writeResultToCSV(double x, double epsilon, Writer out) {
+        double res = calculate(x, epsilon);
         try (CSVPrinter printer = CSVFormat.DEFAULT.print(out)) {
             printer.printRecord(x, res);
         } catch (IOException e) {
