@@ -25,6 +25,12 @@ public class SEC {
         if (Double.isNaN(cosVal) || cosVal == 0) return nan;
         return 1 / cosVal;
     }
+    public double calculate1(double x, double epsilon) {
+        double cosVal = cos.calculate(x, epsilon);
+        double nan = Double.NaN;
+        if (Double.isNaN(cosVal) || cosVal == 0) return nan;
+        return 1 / cosVal;
+    }
 
     public double writeResultToCSV(double x, double epsilon, Writer out) {
         double res = calculate(x, epsilon);
