@@ -2,6 +2,7 @@ package org.senechka.other;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.math3.util.Precision;
 import org.senechka.exceptions.CorruptetFilenameException;
 
 import java.io.File;
@@ -39,6 +40,7 @@ public class SEC {
             file.createNewFile();
             final PrintWriter printWriter = new PrintWriter(file);
             for (Double current = from; current.compareTo(to) <= 0; current = current+step) {
+                current = Precision.round(current, 2);
                 printWriter.println(current + "," + sec.calculate(current, epsilon));
             }
             printWriter.close();
