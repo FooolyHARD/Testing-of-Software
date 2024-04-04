@@ -57,6 +57,6 @@ public class TestSin {
     @CsvFileSource(
             files = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/SIN_values.csv")
     void checkCsvFileSource(double number, double expected) {
-        assertEquals(sin.calculate(number, 0.00001), expected);
+        assertEquals(expected, sin.calculate(number, 0.000001) );
     }
 }

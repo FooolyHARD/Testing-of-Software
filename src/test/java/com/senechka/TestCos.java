@@ -23,7 +23,6 @@ public class TestCos {
         COS cos = new COS(sinMock);
         @BeforeEach
         void setUp() {
-
             when(sinMock.calculate(-1.1, 0.00001)).thenReturn(-0.8912073043284693);
             when(sinMock.calculate(-1.0, 0.00001)).thenReturn(-0.8414709903007478);
             when(sinMock.calculate(-0.9, 0.00001)).thenReturn(-0.7833269177114994);
@@ -115,7 +114,7 @@ public class TestCos {
                 files = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/COS_values.csv")
         void checkCsvFileSource(double number, double expected) {
 
-            assertEquals(cos.calculate(number, 0.00001), expected);
+            assertEquals(expected, cos.calculate(number, 0.00001));
         }
     }
 }

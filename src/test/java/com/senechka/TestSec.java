@@ -100,9 +100,8 @@ public class TestSec {
         @CsvFileSource(
                 files = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/SEC_values.csv")
         void checkCsvFileSource(double number, double expected) {
-            COS cos = new COS(sinMock);
             SEC sec = new SEC(cosMock);
-            assertEquals(sec.calculate(number, 0.00001), expected);
+            assertEquals(expected, sec.calculate(number, 0.00001));
         }
     }
 }
