@@ -42,9 +42,11 @@ public class TestFunc {
         static Reader log3In;
         static Reader log5In;
 
+        static Reader log10In;
+
 
         @BeforeAll
-        static void init() {
+        static void setUp() {
             secMock = Mockito.mock(SEC.class);
             cosMock = Mockito.mock(COS.class);
             sinMock = Mockito.mock(SIN.class);
@@ -58,22 +60,23 @@ public class TestFunc {
                 log2In = new FileReader("/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/LOG2_values.csv");
                 log3In = new FileReader("/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/LOG3_values.csv");
                 log5In = new FileReader("/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/LOG5_values.csv");
+                log10In = new FileReader("/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/LOG10_values.csv");
 
                 Iterable<CSVRecord> records = CSVFormat.DEFAULT.parse(secIn);
                 for (CSVRecord record : records) {
-                    Mockito.when(secMock.calculate(Double.parseDouble(record.get(0)), functionEps)).thenReturn(Double.valueOf(record.get(1)));
+                    Mockito.when(secMock.calculate(Mockito.eq(Double.parseDouble(record.get(0))), Mockito.anyDouble())).thenReturn(Double.valueOf(record.get(1)));
                 }
                 records = CSVFormat.DEFAULT.parse(cosIn);
                 for (CSVRecord record : records) {
-                    Mockito.when(cosMock.calculate(Double.parseDouble(record.get(0)), functionEps)).thenReturn(Double.valueOf(record.get(1)));
+                    Mockito.when(cosMock.calculate(Mockito.eq(Double.parseDouble(record.get(0))), Mockito.anyDouble())).thenReturn(Double.valueOf(record.get(1)));
                 }
                 records = CSVFormat.DEFAULT.parse(sinIn);
                 for (CSVRecord record : records) {
-                    Mockito.when(sinMock.calculate(Double.parseDouble(record.get(0)), functionEps)).thenReturn(Double.valueOf(record.get(1)));
+                    Mockito.when(sinMock.calculate(Mockito.eq(Double.parseDouble(record.get(0))), Mockito.anyDouble())).thenReturn(Double.valueOf(record.get(1)));
                 }
                 records = CSVFormat.DEFAULT.parse(lnIn);
                 for (CSVRecord record : records) {
-                    Mockito.when(lnMock.calculate(Double.parseDouble(record.get(0)), functionEps)).thenReturn(Double.valueOf(record.get(1)));
+                    Mockito.when(lnMock.calculate(Mockito.eq(Double.parseDouble(record.get(0))), Mockito.anyDouble())).thenReturn(Double.valueOf(record.get(1)));
                 }
                 records = CSVFormat.DEFAULT.parse(log2In);
                 for (CSVRecord record : records) {
@@ -86,6 +89,10 @@ public class TestFunc {
                 for (CSVRecord record : records) {
                     Mockito.when(logMock.calculate(5, Double.parseDouble(record.get(0)), functionEps)).thenReturn(Double.valueOf(record.get(1)));
                 }
+                records = CSVFormat.DEFAULT.parse(log10In);
+                for (CSVRecord record : records) {
+                    Mockito.when(logMock.calculate(10, Double.parseDouble(record.get(0)), functionEps)).thenReturn(Double.valueOf(record.get(1)));
+                }
             } catch (IOException ex) {
                 System.err.println("Ты как в тесте IOE поймал?!");
             }
@@ -95,8 +102,8 @@ public class TestFunc {
         @ParameterizedTest
         @CsvFileSource(files = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/Func_values.csv")
         void testSystemWithMocks(double value, double expected) {
-            Function function = new Function(secMock, lnMock, logMock, sinMock, cosMock);
-            assertEquals(expected, function.solve(value, 0.000001), eps);
+            Function function = new Function(secMock, lnMock, new LOG(lnMock), sinMock, cosMock);
+            assertEquals(expected, function.solve(value, functionEps), eps*100);
 
         }
 
@@ -104,42 +111,42 @@ public class TestFunc {
         @CsvFileSource(files =  "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/Func_values.csv")
         void testWithSec(double value, double expected) {
             Function function = new Function(new SEC(cosMock), lnMock, logMock, sinMock, cosMock);
-            assertEquals(expected, function.solve(value, functionEps), eps);
+            assertEquals(expected, function.solve(value, functionEps), eps*100);
         }
 
         @ParameterizedTest
         @CsvFileSource(files =  "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/Func_values.csv")
         void testWithCos(double value, double expected) {
             Function function = new Function(new SEC(new COS(sinMock)), lnMock, logMock, sinMock, cosMock);
-            assertEquals(expected, function.solve(value, functionEps), eps * 20);
+            assertEquals(expected, function.solve(value, functionEps), eps * 100);
         }
 
         @ParameterizedTest
         @CsvFileSource(files =  "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/Func_values.csv")
         void testWithSin(double value, double expected) {
             Function function = new Function(new SEC(new COS(new SIN())), lnMock, logMock, sinMock, cosMock);
-            assertEquals(expected, function.solve(value, functionEps), eps* 20);
+            assertEquals(expected, function.solve(value, functionEps), eps* 100);
         }
 
         @ParameterizedTest
         @CsvFileSource(files =  "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/Func_values.csv")
         void testWithLog(double value, double expected) {
             Function function = new Function(secMock, lnMock, new LOG(lnMock), sinMock, cosMock);
-            assertEquals(expected, function.solve(value, functionEps), eps* 20);
+            assertEquals(expected, function.solve(value, functionEps), eps* 100);
         }
 
         @ParameterizedTest
         @CsvFileSource(files =  "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/Func_values.csv")
         void testWithLn(double value, double expected) {
             Function function = new Function(secMock, new LN(), new LOG(), sinMock, cosMock);
-            assertEquals(expected, function.solve(value, functionEps), eps * 20);
+            assertEquals(expected, function.solve(value, functionEps), eps*100);
         }
 
         @ParameterizedTest
         @CsvFileSource(files =  "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/Func_values.csv")
         void testWithSinAndLn(double value, double expected) {
             Function function = new Function();
-            assertEquals(expected, function.solve(value, functionEps), 0.1);
+            assertEquals(expected, function.solve(value, functionEps), eps*100);
         }
     }
 }

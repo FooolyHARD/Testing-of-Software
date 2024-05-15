@@ -26,11 +26,11 @@ public class Function {
     COS cos;
 
     public Function() {
-        this.sec = new SEC();
         this.ln = new LN();
         this.log = new LOG(ln);
         this.sin = new SIN();
-        this.cos = new COS();
+        this.cos = new COS(sin);
+        this.sec = new SEC(cos);
     }
 
     public Function(SEC sec, LN ln, LOG log, SIN sin, COS cos) {

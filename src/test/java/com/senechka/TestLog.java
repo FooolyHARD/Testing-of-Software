@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 public class TestLog {
@@ -42,9 +44,11 @@ public class TestLog {
     @BeforeEach
     void setUp() {
         lnMock = Mockito.mock(LN.class);
+
         List<List<String>> mocklnValues = parseMocksLn();
+
         for (List<String> mocklnValue : mocklnValues) {
-            when(lnMock.calculate(Double.parseDouble(mocklnValue.get(0)), 0.000001)).thenReturn(Double.parseDouble(mocklnValue.get(1)));
+            when(lnMock.calculate(eq(Double.parseDouble(mocklnValue.get(0))), anyDouble())).thenReturn(Double.parseDouble(mocklnValue.get(1)));
         }
     }
 
@@ -53,7 +57,7 @@ public class TestLog {
             files = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/LOG2_values.csv")
     void checkCsvFileSource2(double number, double expected) {
         LOG log = new LOG(lnMock);
-        assertEquals(expected, log.calculate(2, number, 0.000001));
+        assertEquals(expected, log.calculate(2.0, number, 0.000001));
     }
     @ParameterizedTest
     @CsvFileSource(

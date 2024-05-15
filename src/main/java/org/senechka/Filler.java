@@ -24,6 +24,7 @@ public class Filler {
         final String FILE_PATH_LOG3 = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/LOG3_values.csv";
         final String FILE_PATH_LOG5 = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/LOG5_values.csv";
         final String FILE_PATH_Func = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/Func_values.csv";
+        final String FILE_PATH_LOG10 = "/Users/arsenykonovalov/programming_itmo/tpo/lab2/src/main/resources/csv/LOG10_values.csv";
 
         final SIN sin = new SIN();
         final COS cos = new COS();
@@ -35,10 +36,11 @@ public class Filler {
         sin.writeResultToCSV(FILE_PATH_SIN, START_X, END_X, STEP, 0.000001);
         cos.writeResultToCSV(FILE_PATH_COS, START_X, END_X, STEP, 0.000001);
         sec.writeResultToCSV(FILE_PATH_SEC, START_X, END_X, STEP, 0.000001);
-        ln.writeResultToCSV(FILE_PATH_LN, START_X, END_X, STEP, 0.000001);
+        //ln.writeResultToCSV(FILE_PATH_LN, START_X, END_X+, STEP, 0.000001);
         function.writeResultToCSV(FILE_PATH_Func, START_X, END_X, STEP, 0.000001);
         log.writeResultToCSV(FILE_PATH_LOG2, START_X, END_X, STEP, 0.000001, 2.0);
         log.writeResultToCSV(FILE_PATH_LOG3, START_X, END_X, STEP, 0.000001, 3.0);
         log.writeResultToCSV(FILE_PATH_LOG5, START_X, END_X, STEP, 0.000001, 5.0);
+        log.writeResultToCSV(FILE_PATH_LOG10, START_X, END_X, STEP, 0.000001, 10.0);
     }
 }

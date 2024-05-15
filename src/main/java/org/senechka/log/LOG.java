@@ -39,7 +39,7 @@ public class LOG {
         final PrintWriter printWriter = new PrintWriter(file);
         for (Double current = from; current.compareTo(to) <= 0; current = current+step) {
             current = Precision.round(current, 2);
-            printWriter.println(current + "," + log.calculate(current, degree, epsilon ));
+            printWriter.println(current + "," + log.calculate(degree, current, epsilon ));
         }
         printWriter.close();
     }
